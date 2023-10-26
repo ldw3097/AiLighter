@@ -1,0 +1,45 @@
+{
+  "name": "웹 문서 중요문장 하이라이팅 프로그램",
+  "description": "웹 페이지내에 중요문장을 하이라이팅 해주는 크롬 확장 프로그램입니다.",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+  "matches": ["<all_urls>"],
+   "css": ["content.css"],
+  "js": ["content.js"],
+  "run_at" :"document_idle",
+  "all_frames" : true
+}],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "scripting",
+    "nativeMessaging"
+  ],
+  "host_permissions": ["*://*/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/icons8-color-16.png",
+      "32": "/images/icons8-color-32.png",
+      "48": "/images/icons8-color-48.png",
+      "128": "/images/icons8-color-128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/icons8-color-16.png",
+    "32": "/images/icons8-color-32.png",
+    "48": "/images/icons8-color-48.png",
+    "128": "/images/icons8-color-128.png"
+  },
+ "externally_connectable": {
+    "matches": [
+      "chrome-extension://femmmkolnmkahibjblonjpiahjlgdbhd/*"
+    ]
+  }
+  //"options_page": "options.html"
+}
