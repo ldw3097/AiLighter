@@ -1,46 +1,22 @@
-/*
-chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    if (tabs.length === 0) {
-        console.error('현재 활성 탭을 찾을 수 없습니다.');
-        return;
-    }
+const serverURL = "http://127.0.0.1:8000/";
 
-    const url = tabs[0].url;
-    console.log(url);
-
-    // readabilitySAX 앱 연결
-    chrome.runtime.sendNativeMessage(
-        'com.ailighter.readability',
-        { Address: `${url}` },
-        function (response) {
-            if (response) { // 응답을 받으면
-                const result = response.result;
-
-                // 크롤링 결과를 popup.html에 출력
-                const resultElement = document.getElementById('result');
-                resultElement.textContent = result;
-                console.log(result);
-
-            } else {
-                console.log("none");
+// 결과출력
+chrome.tabs.query({
+            active: true,
+            currentWindow: true
+        }, function(tabs) {
+            if (tabs.length === 0) {
+                console.error('현재 활성 탭을 찾을 수 없습니다.');
+                return;
             }
-        }
-    );
-*/ // 결과출력
-chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    if (tabs.length === 0) {
-        console.error('현재 활성 탭을 찾을 수 없습니다.');
-        return;
-    }
+            const url = tabs[0].url;            
 
-    const url = tabs[0].url;
-
-    // readabilitySAX 앱 연결
-    chrome.runtime.sendNativeMessage(
-        'com.ailighter.readability',
-        { Address: `${url}` },
-        function (response) {
-            if (response) { // 응답을 받으면
+            (async () => {
+                const response = await chrome.runtime.sendNativeMessage(
+                    'com.ailighter.readability', {
+                        Address: `${url}`
+                    }, );
+                // do something with response here, not outside the function
                 const result = response.result;
 
                 // JSON 데이터 생성
@@ -48,17 +24,40 @@ chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                     url: url,
                     content: result
                 };
-                
-                //background.js로 json파일 전송
-                chrome.runtime.sendMessage({ id: 'crawling', data: jsonData }, function(response) {});
+                const sendData = {
+                    data: jsonData
+                };
 
-                // JSON 데이터를 다운로드
-                //downloadJSON(jsonData);            
-            } else {
-                console.log("none");
-            }
-        }
-    );
+                const headers = new Headers({
+                    'accept': 'application/json',
+                    'Content-Type': 'application/json',
+                });
+
+                const apiCall = {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(sendData),
+                };
+
+                fetch(serverURL, apiCall).then(function(response) {
+                    if (response.status !== 200) {
+                        console.log("response error");
+                        return;
+                    }
+                    response.json().then(function(data) {
+                        searchStrings = data["content"];
+                        const stringList = document.getElementById("content");
+                        searchStrings.forEach(str => {
+                            const p = document.createElement('p');
+                            p.textContent = str;
+                            stringList.appendChild(p);
+                        });
+                        chrome.tabs.sendMessage(tabs[0].id, {action: 'highlight', content: searchStrings}, /* callback */);
+                    })
+                }).catch(function(err) {
+
+                });
+            })();
 });
 
 function downloadJSON(data) {
