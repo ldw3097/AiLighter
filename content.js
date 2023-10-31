@@ -1,57 +1,7 @@
 const serverURL = "http://127.0.0.1:8000/";
 const url = document.URL;
 
-let searchStrings;
 var processedStrings;
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if (request.action === 'openPopup') {
-        chrome.runtime.sendMessage({ action: "getNativeMessage", url: url }, function(response) {
-            if (response) {
-                const result = response.result;
-                const jsonData = {
-                    url: url,
-                    content: result
-                };
-                const sendData = {
-                    data: jsonData
-                };
-
-                const headers = new Headers({
-                    'accept': 'application/json',
-                    'Content-Type': 'application/json',
-                });
-
-                const apiCall = {
-                    method: 'POST',
-                    headers: headers,
-                    body: JSON.stringify(sendData),
-                };
-
-                fetch(serverURL, apiCall)
-                    .then(function(response) {
-                        if (response.status !== 200) {
-                            return;
-                        }
-                        response.json()
-                            .then(function(data) {
-                                searchStrings = data["content"];
-                                processedStrings = searchStrings;
-                                chrome.runtime.sendMessage({ processedStrings: processedStrings }, function(response) {
-                                        console.log('processedStrings sent to popup.js');
-                                  });
-                                processTextNodes(document.body);
-                            });
-                    })
-                    .catch(function(err) {
-                        // Handle error
-                    });
-            } else {
-                console.log("none");
-            }
-        });
-    }
-});
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action === 'reset') {
@@ -62,7 +12,13 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             }
         }
     }
+
+    if (request.action === 'highlight') {
+        processedStrings = request.content;
+        processTextNodes(document.body);
+    }
 });
+
 function processTextNodes(node) {
     if (node.nodeType === Node.TEXT_NODE) {
         var text = node.textContent;
@@ -84,6 +40,7 @@ function processTextNodes(node) {
         }
     }
 }
+
 function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // 이스케이프 처리 함수
 }
