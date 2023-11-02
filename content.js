@@ -15,7 +15,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     if (request.action === 'highlight') {
         processedStrings = request.content;
-        console.log(processedStrings);
         removeNbsp();
         SpanAdd();
         DeleteBanner();
@@ -26,7 +25,7 @@ function removeNbsp() {
     var elements = document.getElementsByTagName('*');
     for (var i = 0; i < elements.length; i++) {
         var element = elements[i];
-        if (element.childNodes.length > 0 && element.innerHTML.includes('&nbsp;')) {
+        if (element.innerHTML.includes('&nbsp;')) {
             element.innerHTML = element.innerHTML.replace(/&nbsp;/g, ' ');
         }
     }

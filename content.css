@@ -1,5 +1,5 @@
 .highlighted {
-  background-color: yellow;
-  font-weight: bold;
-  color: black;
+  background-color: yellow !important;
+  font-weight: bold !important;
+  color: black !important;
 }

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ('C:\\Users\\wjdan\\Downloads\\Ailighter\\native-app\\build\\native_app\\PYZ-00.pyz',
+=======
+('C:\\Users\\wjdan\\Downloads\\newhighlighter\\native-app\\build\\native_app\\PYZ-00.pyz',
+>>>>>>> 32417cf7f47c1ae0d9228cc7c79b5a4dbb937867
  [('_compat_pickle',
    'C:\\Users\\wjdan\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\_compat_pickle.py',
    'PYMODULE'),

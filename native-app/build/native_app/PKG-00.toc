@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ('C:\\Users\\wjdan\\Downloads\\Ailighter\\native-app\\build\\native_app\\native_app.pkg',
+=======
+('C:\\Users\\wjdan\\Downloads\\newhighlighter\\native-app\\build\\native_app\\native_app.pkg',
+>>>>>>> 32417cf7f47c1ae0d9228cc7c79b5a4dbb937867
  {'BINARY': True,
   'DATA': True,
   'EXECUTABLE': True,
@@ -10,6 +14,7 @@
   'SYMLINK': False},
  [('pyi-contents-directory _internal', '', 'OPTION'),
   ('PYZ-00.pyz',
+<<<<<<< HEAD
    'C:\\Users\\wjdan\\Downloads\\Ailighter\\native-app\\build\\native_app\\PYZ-00.pyz',
    'PYZ'),
   ('struct',
@@ -26,6 +31,24 @@
    'PYMODULE'),
   ('pyimod04_pywin32',
    'C:\\Users\\wjdan\\Downloads\\Ailighter\\native-app\\build\\native_app\\localpycs\\pyimod04_pywin32.pyc',
+=======
+   'C:\\Users\\wjdan\\Downloads\\newhighlighter\\native-app\\build\\native_app\\PYZ-00.pyz',
+   'PYZ'),
+  ('struct',
+   'C:\\Users\\wjdan\\Downloads\\newhighlighter\\native-app\\build\\native_app\\localpycs\\struct.pyc',
+   'PYMODULE'),
+  ('pyimod01_archive',
+   'C:\\Users\\wjdan\\Downloads\\newhighlighter\\native-app\\build\\native_app\\localpycs\\pyimod01_archive.pyc',
+   'PYMODULE'),
+  ('pyimod02_importers',
+   'C:\\Users\\wjdan\\Downloads\\newhighlighter\\native-app\\build\\native_app\\localpycs\\pyimod02_importers.pyc',
+   'PYMODULE'),
+  ('pyimod03_ctypes',
+   'C:\\Users\\wjdan\\Downloads\\newhighlighter\\native-app\\build\\native_app\\localpycs\\pyimod03_ctypes.pyc',
+   'PYMODULE'),
+  ('pyimod04_pywin32',
+   'C:\\Users\\wjdan\\Downloads\\newhighlighter\\native-app\\build\\native_app\\localpycs\\pyimod04_pywin32.pyc',
+>>>>>>> 32417cf7f47c1ae0d9228cc7c79b5a4dbb937867
    'PYMODULE'),
   ('pyiboot01_bootstrap',
    'C:\\Users\\wjdan\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\loader\\pyiboot01_bootstrap.py',
@@ -34,7 +57,11 @@
    'C:\\Users\\wjdan\\AppData\\Local\\Programs\\Python\\Python311\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks\\pyi_rth_inspect.py',
    'PYSOURCE'),
   ('native_app',
+<<<<<<< HEAD
    'C:\\Users\\wjdan\\Downloads\\Ailighter\\native-app\\native_app.py',
+=======
+   'C:\\Users\\wjdan\\Downloads\\newhighlighter\\native-app\\native_app.py',
+>>>>>>> 32417cf7f47c1ae0d9228cc7c79b5a4dbb937867
    'PYSOURCE')],
  'python311.dll',
  True,
