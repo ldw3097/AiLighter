@@ -1,22 +1,22 @@
-const serverURL = "http://127.0.0.1:8000/"; 
+const serverURL = "http://127.0.0.1:8000/";
+
 // 결과출력
 chrome.tabs.query({
-    active: true,
-    currentWindow: true
-}, function(tabs) {
-    if (tabs.length === 0) {
-        console.error('현재 활성 탭을 찾을 수 없습니다.');
-        return;
-    }
-    const url = tabs[0].url;
+            active: true,
+            currentWindow: true
+        }, function(tabs) {
+            if (tabs.length === 0) {
+                console.error('현재 활성 탭을 찾을 수 없습니다.');
+                return;
+            }
+            const url = tabs[0].url;            
 
-    // readabilitySAX 앱 연결
-    chrome.runtime.sendNativeMessage(
-        'com.ailighter.readability', {
-            Address: `${url}`
-        },
-        function(response) {
-            if (response) { // 응답을 받으면
+            (async () => {
+                const response = await chrome.runtime.sendNativeMessage(
+                    'com.ailighter.readability', {
+                        Address: `${url}`
+                    }, );
+                // do something with response here, not outside the function
                 const result = response.result;
 
                 // JSON 데이터 생성
@@ -27,7 +27,7 @@ chrome.tabs.query({
                 const sendData = {
                     data: jsonData
                 };
-
+                console.log(jsonData);
                 const headers = new Headers({
                     'accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -41,53 +41,41 @@ chrome.tabs.query({
 
                 fetch(serverURL, apiCall).then(function(response) {
                     if (response.status !== 200) {
-
+                        console.log("response error");
                         return;
                     }
                     response.json().then(function(data) {
-                        chrome.storage.local.set({'response': data}, function() {
-                            chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-                            chrome.tabs.sendMessage(tabs[0].id, {action: 'getValue'})})
+                        searchStrings = data["content"];
+                        const stringList = document.getElementById("content");
+                        var i = 1;
+                        searchStrings.forEach(str => {
+                            if(str != "")
+                            {
+                                const p = document.createElement('p');
+                                p.textContent = i + '. '+ str;
+                                i++;
+                                stringList.appendChild(p);
+                            }
                         });
-                        console.log("store");
+                        chrome.tabs.sendMessage(tabs[0].id, {action: 'highlight', content: searchStrings}, /* callback */);
                     })
                 }).catch(function(err) {
 
                 });
-            } else {
-                console.log("none");
-            }
-        }
-    );
-
+            })();
 });
 // button element 요소
 document.addEventListener('DOMContentLoaded', function() 
 {
-    let page = document.getElementById("content");
     let ResetBtn = document.getElementById("resetbtn");
-
-    var newTextDiv =  document.createElement("div");
-    /*
-     for(var i = 0; i < searchStrings.length; i++)
-    {
-            newTextDiv.setAttribute("id","ContentDiv");
-            //var newText =  document.createTextNode(i+1 +". "+searchStrings[i]);
-            var newBr =  document.createElement("p");
-
-           // newTextDiv.appendChild(newText);
-            newTextDiv.appendChild(newBr);
-            page.appendChild(newTextDiv);
-    }
-    */
     ResetBtn.addEventListener('click',ResetButton);
+
     function ResetButton(event)
     {
          chrome.tabs.query({active: true, currentWindow: true}, function (tabs) 
          {
             chrome.tabs.sendMessage(tabs[0].id, {action: 'reset'}, /* callback */);
         });
-         if(document.getElementById("ContentDiv") != null)
-            document.getElementById("ContentDiv").parentNode.removeChild(document.getElementById("ContentDiv"));
+         document.getElementById("content").innerHTML = '';
     }
 });

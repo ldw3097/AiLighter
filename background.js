@@ -4,9 +4,3 @@
 * ---------------------------------------------------------------------------------
 * - 디폴트 컬러를 지정하여 스토리지 API 를 호출하여 지정한 색을 저장시킵니다.
 **/
-const color = ["#3aa757"];
-
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.sync.set({ color });
-
-});
