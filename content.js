@@ -18,6 +18,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         removeNbsp();
         SpanAdd();
         DeleteBanner();
+       // DeleteRefer();
+        wikipediaProcess();
         processTextNodes(document.body);
     }
 });
@@ -30,11 +32,18 @@ function removeNbsp() {
         }
     }
 }
+var contentArr = [];
+var nodeArr = [];
 function processTextNodes(node) {
     if (node.nodeType === Node.TEXT_NODE) {
+        nodeArr.push(node.parentNode);
         var text = node.textContent;
         var highlightedText = text; // 하이라이트 처리된 텍스트
+        contentArr.push(highlightedText);
         processedStrings.forEach(function(searchString) {
+           // searchString = searchString.replace(/\[.*?\]/g, '');
+           // console.log(searchString);
+            highlightedText = highlightedText.replace("  ", " ");
             if (searchString != "" && highlightedText.includes(searchString)) {
                 highlightedText = highlightedText.replace(searchString, '<span class="highlighted">$&</span>');
             }
@@ -50,7 +59,23 @@ function processTextNodes(node) {
         }
     }
 }
+function wikipediaProcess() 
+{
+    var item = document.querySelectorAll('.mw-parser-output > p');
 
+   for(var i = 0; i < item.length; i++)
+    {
+        var str = "";
+        for(var j = 0; j < item[i].childNodes.length; j++)
+        {
+            str += item[i].childNodes[j].textContent;
+           
+        }
+        var span = document.createElement('p');
+        span.innerHTML = str;
+        item[i].parentNode.replaceChild(span,item[i]);
+    }
+}
 function SpanAdd() 
 {
     var item = document.querySelectorAll('.wrap_item');
