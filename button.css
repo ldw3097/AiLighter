@@ -22,3 +22,36 @@
   top: 85%;
   left: 85%;
 }
+#red
+{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 83%;
+  left: 5%;
+  background-color:#FF7A86;
+  border-color: #FF7A86;
+  border-radius: 5px;
+}
+#yellow
+{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 83%;
+  left: 15%;
+  background-color:yellow;
+  border-color: yellow;
+  border-radius: 5px;
+}
+#blue
+{
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 83%;
+  left: 25%;
+  background-color:#87CEFA;
+  border-color: #87CEFA;
+  border-radius: 5px;
+}

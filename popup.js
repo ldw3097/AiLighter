@@ -1,4 +1,6 @@
 const serverURL = "http://127.0.0.1:8000/";
+var i = 1;
+var searchStrings = "";
 
 // 결과출력
 chrome.tabs.query({
@@ -27,7 +29,6 @@ chrome.tabs.query({
                 const sendData = {
                     data: jsonData
                 };
-                console.log(jsonData);
                 const headers = new Headers({
                     'accept': 'application/json',
                     'Content-Type': 'application/json',
@@ -46,9 +47,8 @@ chrome.tabs.query({
                     }
                     response.json().then(function(data) {
                         searchStrings = data["content"];
-                        const stringList = document.getElementById("content");
-                        var i = 1;
-                        searchStrings.forEach(str => {
+                         const stringList = document.getElementById("content");
+                            searchStrings.forEach(str => {
                             if(str != "")
                             {
                                 const p = document.createElement('p');
@@ -70,6 +70,10 @@ document.addEventListener('DOMContentLoaded', function()
     let ResetBtn = document.getElementById("resetbtn");
     ResetBtn.addEventListener('click',ResetButton);
 
+    document.getElementById("red").addEventListener('click',HighlightRedColor);
+    document.getElementById("yellow").addEventListener('click',HighlightYellowColor);
+    document.getElementById("blue").addEventListener('click',HighlightBlueColor);
+
     function ResetButton(event)
     {
          chrome.tabs.query({active: true, currentWindow: true}, function (tabs) 
@@ -78,4 +82,29 @@ document.addEventListener('DOMContentLoaded', function()
         });
          document.getElementById("content").innerHTML = '';
     }
+
+    function HighlightRedColor(event)
+    {
+         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) 
+         {
+            chrome.tabs.sendMessage(tabs[0].id, {action: 'red'}, /* callback */);
+        });
+    }
+
+    function HighlightYellowColor(event)
+    {
+         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) 
+         {
+            chrome.tabs.sendMessage(tabs[0].id, {action: 'yellow'}, /* callback */);
+        });
+    }
+
+    function HighlightBlueColor(event)
+    {
+         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) 
+         {
+            chrome.tabs.sendMessage(tabs[0].id, {action: 'blue'}, /* callback */);
+        });
+    }
+    
 });

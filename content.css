@@ -3,3 +3,13 @@
   font-weight: bold !important;
   color: black !important;
 }
+.highlightedRed {
+  background-color: #FF7A86 !important;
+  font-weight: bold !important;
+  color: black !important;
+}
+.highlightedBlue {
+  background-color: #87CEFA !important;
+  font-weight: bold !important;
+  color: black !important;
+}

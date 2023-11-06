@@ -2,25 +2,56 @@ const serverURL = "http://127.0.0.1:8000/";
 const url = document.URL;
 
 var processedStrings;
+var Curhighlighted = '.highlighted';
+var IsHighlighted = false;
+
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.action === 'reset') {
-        var highlightArr = document.querySelectorAll(".highlighted");
+        var highlightArr = document.querySelectorAll(Curhighlighted);
         for (var i = 0; i < highlightArr.length; i++) {
-            if (highlightArr[i].parentNode) {
-                highlightArr[i].parentNode.replaceChild(document.createTextNode(highlightArr[i].textContent), highlightArr[i]);
-            }
+            highlightArr[i].className = 'Nothighlighted';
         }
+        Curhighlighted = '.Nothighlighted';
     }
-
-    if (request.action === 'highlight') {
+    if (request.action === 'red') {
+        var highlightArr = document.querySelectorAll(Curhighlighted);
+        for (var i = 0; i < highlightArr.length; i++) {
+            highlightArr[i].className = 'highlightedRed';
+        }
+        Curhighlighted = '.highlightedRed';
+    }
+    if (request.action === 'yellow') {
+        var highlightArr = document.querySelectorAll(Curhighlighted);
+        for (var i = 0; i < highlightArr.length; i++) {
+            highlightArr[i].className = 'highlighted';
+        }
+        Curhighlighted = '.highlighted';
+    }
+    if (request.action === 'blue') {
+        var highlightArr = document.querySelectorAll(Curhighlighted);
+        for (var i = 0; i < highlightArr.length; i++) {
+            highlightArr[i].className = 'highlightedBlue';
+        }
+        Curhighlighted = '.highlightedBlue';
+    }
+    if (request.action === 'highlight' && !IsHighlighted) {
         processedStrings = request.content;
         removeNbsp();
         SpanAdd();
         DeleteBanner();
-       // DeleteRefer();
         wikipediaProcess();
         processTextNodes(document.body);
+        IsHighlighted = true;
+    }
+    else if(request.action === 'highlight' && IsHighlighted)
+    {
+        if(Curhighlighted != '.Nothighlighted') return;
+        var highlightArr = document.querySelectorAll(Curhighlighted);
+        for (var i = 0; i < highlightArr.length; i++) {
+                highlightArr[i].className = 'highlighted';
+        }
+        Curhighlighted = '.highlighted';
     }
 });
 function removeNbsp() {
@@ -41,8 +72,6 @@ function processTextNodes(node) {
         var highlightedText = text; // 하이라이트 처리된 텍스트
         contentArr.push(highlightedText);
         processedStrings.forEach(function(searchString) {
-           // searchString = searchString.replace(/\[.*?\]/g, '');
-           // console.log(searchString);
             highlightedText = highlightedText.replace("  ", " ");
             if (searchString != "" && highlightedText.includes(searchString)) {
                 highlightedText = highlightedText.replace(searchString, '<span class="highlighted">$&</span>');
