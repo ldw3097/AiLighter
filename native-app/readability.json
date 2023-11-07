@@ -1,7 +1,0 @@
-{
-  "name": "com.ailighter.readability",
-  "description": "Start readabilitySAX",
-  "path": "dist/native_app/native_app.exe",
-  "type": "stdio",
-  "allowed_origins": ["chrome-extension://inhoeofnemihkiankmebmheokohopgmf/"]
-}
