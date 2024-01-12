@@ -1,12 +1,8 @@
-# Chrome Extension 샘플 소스
+# AiLighter
 
 ## 개요
-Chrome Extension 만들기 샘플 소스입니다.  
-간단히 현재 보고 있는 웹 페이지의 배경색을 변경해 주는 프로그램을 개발한 소스입니다.
+<img src="images/intro2.png">
 
-### 사용방법  
-- [블로그 설명](https://yscho03.tistory.com/103) 글을 참조하길 바랍니다.
-
-
-### 참고 소스   
-- Reference Source : [google extensions getstarted](https://developer.chrome.com/docs/extensions/mv3/getstarted/)
+- 웹페이지의 중요문장을 NLP기술로 선별하여 하이라이팅하는 브라우저 확장프로그램입니다.
+- 클라이언트용 크롬 확장프로그램이며 사용하기위해서는 AiLighter server가 실행되어 있어야 합니다.
+- AiLighter server : https://github.com/ldw3097/AiLighter_Server
